@@ -1,0 +1,33 @@
+```py
+# ============================================================
+# Установка PySpark (Java уже есть в Colab!)
+# ============================================================
+!pip install -q pyspark
+
+# ============================================================
+# Настройка окружения
+# ============================================================
+import os
+
+# В Colab Java уже установлена здесь:
+os.environ["JAVA_HOME"] = "/usr/lib/jvm/java-17-openjdk-amd64"
+
+# Проверка
+!java -version
+
+# ============================================================
+# Создание SparkSession
+# ============================================================
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder \
+    .appName("WebLogsAnalysis") \
+    .master("local[*]") \
+    .config("spark.driver.memory", "2g") \
+    .config("spark.sql.adaptive.enabled", "true") \
+    .config("spark.ui.showConsoleProgress", "false") \
+    .getOrCreate()
+
+print(f"✅ Spark {spark.version} успешно запущен!")
+print(f"🌐 Spark UI: {spark.sparkContext.uiWebUrl}")
+```
